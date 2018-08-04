@@ -10,7 +10,8 @@
 #
 #  Load these cronjobs into the user's crontab file located at /var/spool/cron/crontabs/username 
 #  by issuing: 'crontab cqms-cronjobs'
-#  This command will wipe the existing cronjobs for the current user!   
+#  This command will wipe the existing cronjobs for the current user! 
+#  The 'crontab -l' option causes the current crontab to be displayed on standard output. 
 #
 #  Monday to Friday AM
 #

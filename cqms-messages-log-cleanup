@@ -1,0 +1,42 @@
+#!/bin/bash
+
+: <<README
+=======================================================================
+
+Author:				bruno.seys@ncia.nato.int
+
+Date:				01-08-2018
+
+Version:			0.1.0
+
+Requires:			sed 4.2.2
+
+Tested on:			Ubuntu 14.04 LTS Desktop
+
+bash version:		bash 4.3.11(1)-release.
+					Check your version using "echo $BASH_VERSION"
+
+Features:           Deletes all entries but the last one from a (log) files.
+                    If needed to be exectued repeatedly add an entry 
+                    in crontab such as:
+
+                    30 23 * * 1-5 /home/csu-admin/cqms/cqms-messages-log-cleanup >> 
+                          /home/csu-admin/cqms/cqms-messages-log-cleanup.log 2>&1
+
+                    Means that the script will be executed from Monday to Friday 
+                    at 2330 hours              
+
+Known issues:			
+
+=======================================================================
+README
+
+CURRENT_TIME=$(date +"%F %R")
+MSG_FILE=" /home/csu-admin/cqms/cqms-messages.log"
+FROM_LINE=1
+TO_LINE=$(( $( wc -l $MSG_FILE | cut -d ' ' -f 1 ) - 1 ))
+
+if (( TO_LINE > 0 )); then
+    sed -i "${FROM_LINE},${TO_LINE}d" $MSG_FILE
+    echo "${CURRENT_TIME} # ${TO_LINE} entries wiped" 
+fi

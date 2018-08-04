@@ -1,0 +1,16 @@
+#!/bin/bash
+#
+#  
+#
+#  Author:	bruno.seys@ncia.nato.int
+#
+#  Date:	31 July 2018
+#
+#  Platform:	Ubuntu Server 18.04 LTS
+#
+#  install ngrep by issuing: sudo apt ngrep
+#
+#  'eno1' is the on board cupper Network Interface, change it to another one if essential
+#
+sudo ngrep -d eno1 '(Housing|Fast line|Room|Road Tax)' -W byline -l tcp port 80 | grep -E --line-buffered 'Housing|Fast line|Room|Road Tax' | tee /home/csu-admin/cqms/cqms-messages.log
+

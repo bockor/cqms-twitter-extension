@@ -5,9 +5,9 @@
 
 Author:				bruno.seys@ncia.nato.int
 
-Date:				01-08-2018
+Date:				05-08-2018
 
-Version:			0.1.0
+Version:			0.2.0
 
 Requires:			sed 4.2.2
 
@@ -34,9 +34,18 @@ README
 CURRENT_TIME=$(date +"%F %R")
 MSG_FILE=" /home/csu-admin/cqms/cqms-messages.log"
 FROM_LINE=1
-TO_LINE=$(( $( wc -l $MSG_FILE | cut -d ' ' -f 1 ) - 1 ))
 
-if (( TO_LINE > 0 )); then
-    sed -i "${FROM_LINE},${TO_LINE}d" $MSG_FILE
-    echo "${CURRENT_TIME} # ${TO_LINE} entries wiped" 
+if [ -e $MSG_FILE ]; then
+    TO_LINE=$(( $( wc -l $MSG_FILE | cut -d ' ' -f 1 ) - 1 ))
+
+    if (( TO_LINE > 0 )); then
+        sed -i "${FROM_LINE},${TO_LINE}d" $MSG_FILE
+        echo "${CURRENT_TIME} # ${TO_LINE} entries wiped"
+    else
+         echo "${CURRENT_TIME} # NO entries wiped"
+    fi
+else
+    echo "${CURRENT_TIME} # $MSG_FILE NOT FOUND"
+    exit 1
 fi
+exit

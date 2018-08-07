@@ -1,4 +1,4 @@
-#  N A T O    U N C L A S S I F I E D
+#   
 #
 #  Author:	bruno.seys@ncia.nato.int
 #

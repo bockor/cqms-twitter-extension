@@ -1,0 +1,12 @@
+How to add an embedded Twitter timeline to your website
+
+1.Go to https://publish.twitter.com/.
+2.Enter the URL of the timeline or Moment you’d like to embed.
+3.Customize the design by specifying the height, theme (light or dark), and link color to match your website.
+4.Copy and paste the code into the HTML of your website wherever you would like the timeline to appear.
+5.You're done!
+
+Example:
+
+<a class="twitter-timeline" href="https://twitter.com/ChannelBruno?ref_src=twsrc%5Etfw">Tweets by ChannelBruno</a>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>

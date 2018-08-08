@@ -5,9 +5,9 @@
 
 Author:				bruno.seys@ncia.nato.int
 
-Date:				05-08-2018
+Date:				08-08-2018
 
-Version:			0.2.0
+Version:			0.2.1
 
 Requires:			sed 4.2.2
 
@@ -32,7 +32,7 @@ Known issues:
 README
 
 CURRENT_TIME=$(date +"%F %R")
-MSG_FILE=" /home/csu-admin/cqms/cqms-messages.log"
+MSG_FILE="/home/csu-admin/cqms/cqms-messages.log"
 FROM_LINE=1
 
 if [ -e $MSG_FILE ]; then

@@ -9,7 +9,7 @@ Date:				08-08-2018
 
 Version:			0.2.1
 
-Requires:			sed 4.2.2
+Requires:			
 
 Tested on:			Ubuntu 14.04 LTS Desktop
 
@@ -33,14 +33,16 @@ README
 
 CURRENT_TIME=$(date +"%F %R")
 MSG_FILE="/home/csu-admin/cqms/cqms-messages.log"
-FROM_LINE=1
 
 if [ -e $MSG_FILE ]; then
-    TO_LINE=$(( $( wc -l $MSG_FILE | cut -d ' ' -f 1 ) - 1 ))
+    lines=$( wc -l $MSG_FILE | cut -d ' ' -f 1 )
+    buffer_last_line=$( tail -n 1 $MSG_FILE )	
 
-    if (( TO_LINE > 0 )); then
-        sed -i "${FROM_LINE},${TO_LINE}d" $MSG_FILE
-        echo "${CURRENT_TIME} # ${TO_LINE} entries wiped"
+    if (( lines >  1 )); then
+        #truncate the file
+        > $MSG_FILE 
+        echo "$buffer_last_line" > $MSG_FILE
+        echo "${CURRENT_TIME} # $(( lines - 1 )) entries wiped"
     else
          echo "${CURRENT_TIME} # NO entries wiped"
     fi

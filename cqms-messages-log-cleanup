@@ -3,18 +3,18 @@
 : <<README
 =======================================================================
 
-Author:				bruno.seys@ncia.nato.int
+Author:	            bruno.seys@ncia.nato.int
 
-Date:				08-08-2018
+Date:               08-08-2018
 
-Version:			0.2.1
+Version:            0.2.1
 
 Requires:			
 
-Tested on:			Ubuntu 14.04 LTS Desktop
+Tested on:          Ubuntu 14.04 LTS Desktop
 
-bash version:		bash 4.3.11(1)-release.
-					Check your version using "echo $BASH_VERSION"
+bash version:       bash 4.3.11(1)-release.
+                    Check your version using "echo $BASH_VERSION"
 
 Features:           Deletes all entries but the last one from a (log) files.
                     If needed to be exectued repeatedly add an entry 
@@ -34,20 +34,20 @@ README
 CURRENT_TIME=$(date +"%F %R")
 MSG_FILE="/home/csu-admin/cqms/cqms-messages.log"
 
-if [ -e $MSG_FILE ]; then
-    lines=$( wc -l $MSG_FILE | cut -d ' ' -f 1 )
-    buffer_last_line=$( tail -n 1 $MSG_FILE )	
+if [ -e ${MSG_FILE} ]; then
+    lines=$( wc -l ${MSG_FILE} | cut -d ' ' -f 1 )
+    buffer_last_line=$( tail -n 1 ${MSG_FILE} )	
 
     if (( lines >  1 )); then
         #truncate the file
-        > $MSG_FILE 
-        echo "$buffer_last_line" > $MSG_FILE
+        > ${MSG_FILE} 
+        echo "$buffer_last_line" > ${MSG_FILE}
         echo "${CURRENT_TIME} # $(( lines - 1 )) entries wiped"
     else
          echo "${CURRENT_TIME} # NO entries wiped"
     fi
 else
-    echo "${CURRENT_TIME} # $MSG_FILE NOT FOUND"
+    echo "${CURRENT_TIME} # ${MSG_FILE} NOT FOUND"
     exit 1
 fi
 exit

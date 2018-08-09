@@ -1,17 +1,19 @@
-#   
+# 
 #
 #  Author:	bruno.seys@ncia.nato.int
 #
-#  Date:	03 August 2018
+#  Date:	09 August 2018
 #
-#  UPCOMING SHAPE HOLIDAYS
+# SHAPE official holidays  
 #
-holidays = [
-'1/1/2018',
-'2/1/2018',
-'6/8/2018',
-'15/8/2018',
-'1/11/2018',
+# Important: Do use leading zero's for both day & month
+#
+holidays = (
+'01/01/2018',
+'02/01/2018',
+'08/08/2018',
+'15/08/2018',
+'01/11/2018',
 '12/11/2018',
 '24/12/2018',
 '25/12/2018',
@@ -19,5 +21,5 @@ holidays = [
 '27/12/2018',
 '28/12/2018',
 '31/12/2018',
-'1/1/2019'
-]
+'01/01/2019'
+)

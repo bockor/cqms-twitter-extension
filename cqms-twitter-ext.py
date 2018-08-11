@@ -128,7 +128,7 @@ def do_open():
         batch_destroy(api)
         post_new_tweet(api, format_new_tweet(format_last_log_line()))
     else:
-        #no Twitter timeline updates required on a SHAPE holidayd, so quit on the spot!
+        #no Twitter timeline updates required on a SHAPE holiday, so quit on the spot!
         sys.exit(55)    
 
 def do_closed():

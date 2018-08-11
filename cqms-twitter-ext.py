@@ -5,9 +5,9 @@
 
 Author:             bruno.seys@ncia.nato.int
 
-Version:            0.4.2
+Version:            0.5.0
 
-Date:               01 Aug 2018
+Date:               11 Aug 2018
 
 Platform:			Ubuntu Server 18.04 LTS
 
@@ -70,10 +70,12 @@ Notes:				- Building 210 Counters:
 #initialisation: load all required modules/files
 import sys
 import tweepy
-from credentials import *
 import threading
 import time
+import datetime
 from random import randint,choice
+from credentials import *
+from shape_holidays import holidays
 
 #initialisation: initialise a bunch of variables
 
@@ -121,9 +123,13 @@ snappy_msg = [
 #========================== FUNCTIONS ================================#
 
 def do_open():
-    api = do_authenticate()
-    batch_destroy(api)
-    post_new_tweet(api, format_new_tweet(format_last_log_line()))     
+    if not verify_holiday():
+        api = do_authenticate()
+        batch_destroy(api)
+        post_new_tweet(api, format_new_tweet(format_last_log_line()))
+    else:
+        #no Twitter timeline updates required on a SHAPE holidayd, so quit on the spot!
+        sys.exit(55)    
 
 def do_closed():
     api = do_authenticate()
@@ -133,7 +139,19 @@ def do_closed():
 def do_maint():
     api = do_authenticate()
     batch_destroy(api)
-    post_new_tweet(api, maintenance_txt)     
+    post_new_tweet(api, maintenance_txt)
+
+def do_action_unknown():
+    print ('Unknown action', sys.argv[1], ', I can only handle \'open\',\'closed\', and \'maint\'' )
+
+def verify_holiday():
+    # create a date instance for today and cast it to a str obj
+    this_day = datetime.date.today().strftime('%d/%m/%Y')
+    #Is 'this_day' included in the holidays list ?
+    if this_day in holidays:
+        return True
+    else:
+        return False    
 
 def do_authenticate():
     #OAuth process using keys and tokens from the credentials file
@@ -144,9 +162,6 @@ def do_authenticate():
     #print(api.me().screen_name) # prints ChannelBruno
     #print ("Authenticated as: %s" % api.me().screen_name) 
     return api
-
-def do_action_unknown():
-    print ('Unknown action', sys.argv[1], ', I can only handle \'open\',\'closed\', and \'maint\'' )
 
 def delete_thread(api, objectId):
     '''

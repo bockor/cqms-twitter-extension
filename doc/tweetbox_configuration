@@ -1,0 +1,97 @@
+Software requirements:
+----------------------
+Ubuntu 18.04 LTS Server
+
+Ensure the below packages are present using "sudo apt install <package-name>"
+
+Paramount packages:
+- vim or nano (text file editor)
+- tmux (terminal multiplexer)
+- ufw (firewall)
+- openssh-server (to allow remote interventions)
+- ngrep (network sniffer)
+- python3-pip (Tool for installing and managing Python3 packages)
+- git-all (git is a distibuted software version control system)
+
+Optional packages:
+- tree (list contents of directories in a tree-like format)
+- htop (interactive process viewer)
+
+
+System configuration:
+---------------------
+
+Get the Ubuntu 18.04 LTS Server ISO image from the Ubuntu web site.
+
+Create a bootable USB flash drive and include the ISO.
+
+Ensure that the machine boots from USB drive.
+Ensure that the machine has 2 NIC's.
+
+Install the OS and during the process answer to all questions.
+
+Select "csu-admin" as the primary username.  This acount will have elevated admin rights.
+
+Ensure the system time zone is Europe/Brussels.  Verify and configure using "sudo dpkg-reconfigure tzdata"
+
+Ensure the system has the latest (security) packages using "sudo apt update" and "sudo apt upgrade"
+
+Configure the Ethernet cards using:
+    "sudo vim /etc/netplan"
+Apply current netplan config to running system using:
+    "sudo netplan --debug "
+Check network connectivity using the "ifconfig" or the "ip link" commands.
+At this stage I would recommend a rereboot prior proceeding.  "sudo init 6" does the trick.
+
+Install all packages as per the above Software requirements bullet.
+
+Make a directory for our software.
+    "mkdir $HOME/cqms"
+
+Install the tweepy Twitter API using:
+    "sudo pip3 tweepy"
+Verify using "sudo pip3 list --format=columns | grep tweepy"
+
+Download the cqms-twitter-extension from Github website.
+Ensure that you're in the $HOME directory using the "pwd" command.
+Issue the following command.
+    "git clone" https://github.com/bockor/cqms-twitter-extension.git"
+This creates a new folder "cqms-twitter-extension" into the $HOME directory.
+
+Copy all files from "cqms-twitter-extension" folder to the "cqms" folder.
+    "cp /home/csu-admin/cqms-twitter-extension/* /home/csu-admin/cqms"
+
+Ensure that the /home/csu-admin/cqms/cqms-sniffer file is executable using the "ls -l" command.
+    If not, use the "chmod +x /home/csu-admin/cqms/cqms-sniffer" command. 
+Ensure that the /home/csu-admin/cqms/cqms-twitter-ext.py file is executable using the "ls -l" command.
+    If not, use the "chmod +x /home/csu-admin/cqms/cqms-twitter-ext.py" command. 
+Ensure that the /home/csu-admin/cqms/cqms-messages-log-cleanup file is executable using the "ls -l" command.
+    If not, use the "chmod +x /home/csu-admin/cqms/cqms-messages-log-cleanup" command. 
+
+Twitter authentication.
+Ensure that the "credentials.py" file is populated with genuine Twitter access token and token secret.
+The Service Manager should provide these accordingly.
+
+
+tmux allows to use multiple terminal sessions inside a single terminal.
+Start the tmux server with the "tmux" command.
+Create panes (splits) using:
+<Ctrl>+b % combination for vertical pane
+<Ctrl>+b " combination for vertical pane
+Navigate through the panes using:
+<Ctrl>+b Up|Down|Left|Right Arrow keys
+Kill panes and leave tmux using: the "exit" command or the <Ctrl>+b x combination
+
+
+Start the network sniffer process.
+Open a new tmux pane and issue:
+    "sudo /home/csu-admin/cqms/cqms-sniffer"
+
+Configure cron jobs.  (Schedules execution of scripts and admin tasks) 
+Ensure that you're in the $HOME/cqms directory using the "pwd" command.
+Issue now the "crontab cqms-cronjobs" commands.
+The "crontab -l" command causes the current crontab to be displayed on standard output.
+
+Start the logger and monitor in real time.
+Open a new tmux pane and issue:
+    "tail -f /home/csu-admin/cqms/cqms-twitter-ext.log"

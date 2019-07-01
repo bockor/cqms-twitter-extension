@@ -1,8 +1,8 @@
 #  
 #
-#  Author:	bruno.seys@ncia.nato.int
+#  Author:	bruno.on.the.road@gmail.com
 #
-#  Date:	09 August 2018
+#  Date:	27 Jun 2019
 #
 # SHAPE official holidays  
 #

@@ -1,16 +1,21 @@
 #!/bin/bash
 #
-#  
+# About:	Scan a network on a specific port, capture packets
+#           containing specific buzzwords and save to file 
 #
-#  Author:	bruno.seys@ncia.nato.int
+# Author:	bruno.on.the.road@gmail.com
 #
-#  Date:	31 July 2018
+# Date:		27 June 2019
 #
-#  Platform:	Ubuntu Server 18.04 LTS
+# Platform:	Ubuntu Server 18.04 LTS
 #
-#  install ngrep by issuing: sudo apt ngrep
+# Instructions:	- Install ngrep sniffer by issuing: sudo apt install ngrep
+#		- "eno1" is the onboard cupper Network Interface.
+#		- Change it if needed 
+#		- Place this file into the /usr/local/bin folder
+#		- Ensure the file owner is root.
+#		- If needed change is using the chown command.
+#		- Ensure the file is executable.
+#		- If needed change it using the chmod command.
 #
-#  'eno1' is the on board cupper Network Interface, change it to another one if essential
-#
-sudo ngrep -d eno1 '(Housing|Fast line|Room|Road Tax)' -W byline -l tcp port 80 | grep -E --line-buffered 'Housing|Fast line|Room|Road Tax' | tee /home/csu-admin/cqms/cqms-messages.log
-
+/usr/bin/ngrep -d eno1 '(Housing|Fast line|Room|Road Tax|VAT)' -W byline -l tcp port 80  | grep -E --line-buffered 'Housing|Fast line|Room|Road Tax|VAT' > /home/csu-admin/cqms/cqms-messages.log

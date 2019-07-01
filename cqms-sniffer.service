@@ -1,0 +1,32 @@
+#		Systemd Service File for the cqms-twitter-extension
+#
+# About:	This file is required to start the backend sniffer process
+#           at boot time and ensures it survives a power cycle
+#
+# Author:	bruno.on.the.road@gmail.com
+#
+# Date:		27 June 2019
+#
+# Platform:	Ubuntu server 18.04 LTS
+#
+# Instructions:
+#	- As root, place this file into the "/etc/systemd/system/" folder
+#	- Ensure the cqms-sniffer is present into the "/usr/local/bin/" folder
+#	- Ensure the owner of the cqms-sniffer file is root
+#	- Ensure cqms-sniffer is executable
+#	- Issue the command sudo systemctl enable cqms-sniffer.service
+#	- Check the status issuing systemctl status cqms-sniffer.service
+#
+#
+#
+#
+[Unit]
+Description=ngrep sniffer -> grep filter -> save to cqms-messages.log file
+After=network.target
+#
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/cqms-sniffer
+#
+[Install]
+WantedBy=multi-user.target

@@ -1,8 +1,8 @@
 #  
 #
-#  Author:		bruno.seys@ncia.nato.int
+#  Author:		bruno.on.the.road@gmail.com
 #
-#  Date:		03 Aug 2018
+#  Date:		27 Jun 2019
 #
 #  Platform:	Ubuntu Server 18.04 LTS
 #
@@ -17,17 +17,36 @@
 #
 #  0845 - 1300
 #
+# “At every 2nd minute from 45 through 59 past hour 8 on every day-of-week from Monday through Friday.” 
+#
 45-59/2 8 * * 1-5 /home/csu-admin/cqms/cqms-twitter-ext.py open >> /home/csu-admin/cqms/cqms-twitter-ext.log 2>&1
+#
+# “At every 2nd minute past every hour from 9 through 12 on every day-of-week from Monday through Friday.” 
+#
 */2 9-12 * * 1-5 /home/csu-admin/cqms/cqms-twitter-ext.py open >> /home/csu-admin/cqms/cqms-twitter-ext.log 2>&1
+#
+# “At 13:00 on every day-of-week from Monday through Friday.” 
+#
 0 13 * * 1-5 /home/csu-admin/cqms/cqms-twitter-ext.py closed >> /home/csu-admin/cqms/cqms-twitter-ext.log 2>&1
+#
+#
 #
 #  Monday to Thursday PM
 #
 #  1400 - 1700
 #
+# “At every 2nd minute past every hour from 14 through 16 on every day-of-week from Monday through Thursday.” 
+#
 */2 14-16 * * 1-4 /home/csu-admin/cqms/cqms-twitter-ext.py open >> /home/csu-admin/cqms/cqms-twitter-ext.log 2>&1
+#
+#  “At 17:00 on every day-of-week from Monday through Thursday.” 
+#
 0 17 * * 1-4 /home/csu-admin/cqms/cqms-twitter-ext.py closed >> /home/csu-admin/cqms/cqms-twitter-ext.log 2>&1
 #
+#
+#
 #  Clean up the cqms-messages.log file
+#
+# “At 23:30 on every day-of-week from Monday through Friday.” 
 #
 30 23 * * 1-5 /home/csu-admin/cqms/cqms-messages-log-cleanup >> /home/csu-admin/cqms/cqms-messages-log-cleanup.log 2>&1

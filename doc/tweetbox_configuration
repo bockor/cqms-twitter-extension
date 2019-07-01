@@ -2,21 +2,6 @@ Software requirements:
 ----------------------
 Ubuntu 18.04 LTS Server
 
-Ensure the below packages are present using "sudo apt install <package-name>"
-
-Paramount packages:
-- vim or nano (text file editor)
-- tmux (terminal multiplexer)
-- ufw (firewall)
-- openssh-server (to allow remote interventions)
-- ngrep (network sniffer)
-- python3-pip (Tool for installing and managing Python3 packages)
-- git-all (git is a distibuted software version control system)
-
-Optional packages:
-- tree (list contents of directories in a tree-like format)
-- htop (interactive process viewer)
-
 
 System configuration:
 ---------------------
@@ -37,25 +22,55 @@ Ensure the system time zone is Europe/Brussels.  Verify and configure using "sud
 Ensure the system has the latest (security) packages using "sudo apt update" and "sudo apt upgrade"
 
 Configure the Ethernet cards using:
-    "sudo vim /etc/netplan"
+    "sudo vim /etc/netplan/50-cloud-init.yaml" (file can be named differently though)
+
+The config file that will be used should be like this:
+Be ure to respect the whitespaces here!
+
+network:
+    ethernets:
+         eno1:
+            addresses:
+            - 192.168.0.120/24
+         enp2s0:
+            addresses: []
+            dhcp4: true
+            optional: true
+    version: 2
+
 Apply current netplan config to running system using:
     "sudo netplan --debug "
 Check network connectivity using the "ifconfig" or the "ip link" commands.
 At this stage I would recommend a rereboot prior proceeding.  "sudo init 6" does the trick.
 
-Install all packages as per the above Software requirements bullet.
+Ensure the below packages are present.
+If not use "sudo apt install <package-name>" to get them installed.
 
-Make a directory for our software.
-    "mkdir $HOME/cqms"
+Paramount packages:
+- vim or nano (text file editor)
+- tmux (terminal multiplexer)
+- ufw (firewall)
+- openssh-server (to allow remote interventions)
+- ngrep (network sniffer)
+- python3-pip (Tool for installing and managing Python3 packages)
+- git (git is a distibuted software version control system)
+
+Optional packages:
+- tree (list contents of directories in a tree-like format)
+- htop (interactive process viewer)
+
 
 Install the tweepy Twitter API using:
     "sudo pip3 tweepy"
 Verify using "sudo pip3 list --format=columns | grep tweepy"
 
+Make a directory for our software.
+"mkdir $HOME/cqms"
+
 Download the cqms-twitter-extension from Github website.
 Ensure that you're in the $HOME directory using the "pwd" command.
 Issue the following command.
-    "git clone" https://github.com/bockor/cqms-twitter-extension.git"
+    "git clone https://github.com/bockor/cqms-twitter-extension.git"
 This creates a new folder "cqms-twitter-extension" into the $HOME directory.
 
 Copy all files from "cqms-twitter-extension" folder to the "cqms" folder.
@@ -72,6 +87,23 @@ Twitter authentication.
 Ensure that the "credentials.py" file is populated with genuine Twitter access token and token secret.
 The Service Manager should provide these accordingly.
 
+Execute the instructions laid out in the "cqms-sniffer" file.
+
+Execute the instructions laid out in the "cqms-sniffer.service" file.
+
+Install the cron jobs.  (Schedules execution of scripts and admin tasks) 
+Ensure that you're in the $HOME/cqms directory using the "pwd" command.
+Issue now the "crontab cqms-cronjobs" commands.
+The "crontab -l" command causes the current crontab to be displayed on standard output.
+
+In order to see the captured message from the ticketing machine in realtime issue:
+ "tail -f /home/csu-admin/cqms/cqms-messages.log"
+
+In order to see the eventual error messages :
+ "less /home/csu-admin/cqms/cqms-twitter-ext.log"
+
+tmux usage (basic)
+------------------
 
 tmux allows to use multiple terminal sessions inside a single terminal.
 Start the tmux server with the "tmux" command.
@@ -82,16 +114,3 @@ Navigate through the panes using:
 <Ctrl>+b Up|Down|Left|Right Arrow keys
 Kill panes and leave tmux using: the "exit" command or the <Ctrl>+b x combination
 
-
-Start the network sniffer process.
-Open a new tmux pane and issue:
-    "sudo /home/csu-admin/cqms/cqms-sniffer"
-
-Configure cron jobs.  (Schedules execution of scripts and admin tasks) 
-Ensure that you're in the $HOME/cqms directory using the "pwd" command.
-Issue now the "crontab cqms-cronjobs" commands.
-The "crontab -l" command causes the current crontab to be displayed on standard output.
-
-Start the logger and monitor in real time.
-Open a new tmux pane and issue:
-    "tail -f /home/csu-admin/cqms/cqms-twitter-ext.log"

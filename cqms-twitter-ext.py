@@ -3,11 +3,11 @@
 '''
 
 
-Author:             bruno.seys@ncia.nato.int
+Author:             bruno.on.the.road@gmaol.com
 
-Version:            0.5.0
+Version:            0.6.0
 
-Date:               11 Aug 2018
+Date:               27 Jun 2019
 
 Platform:			Ubuntu Server 18.04 LTS
 
@@ -65,6 +65,7 @@ Notes:				- Building 210 Counters:
 						Room 109D/E
 						Room 109F
 						Room 111
+						VAT
 '''
 
 #initialisation: load all required modules/files

@@ -1,11 +1,11 @@
 #  
 #
-#  Author:	bruno.seys@ncia.nato.int
+#  Author:	bruno.on.the.road@gmail.com
 #
-#  Date:	22 July 2018
+#  Date:	27 Jun 2019
 #
 #  These credentials are property of the author and MUST not be used without his formal permission.
-#  The tweepy API uses the below credentials to read/write to/from the https://twitter.com/channelbruno timeline. 
+#  The tweepy API uses the below credentials to read/write to/from the https://twitter.com/fscep1 timeline. 
 #
 consumer_key = ''
 consumer_secret = ''
